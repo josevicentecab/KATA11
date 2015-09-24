@@ -1,21 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kata11;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
-/**
- *
- * @author usuario
- */
 public class Person {
+
     public final String name;
     public final String surname;
-    public final Date birth;
+    public final Calendar birth;
+    private static final long MILLISECONDS_PER_YEAR = (long) (1000 * 60 * 60 * 24 * 365.25);
 
-    public Person(String name, String surname, Date birth) {
+    public Person(String name, String surname, Calendar birth) {
         this.name = name;
         this.surname = surname;
         this.birth = birth;
@@ -29,16 +24,21 @@ public class Person {
         return surname;
     }
 
-    public Date getBirth() {
+    public Calendar getBirth() {
         return birth;
     }
-    
-    public String getFullName () {
+
+    public String getFullName() {
         return (name + " " + surname);
     }
+
     public int getAge() {
-        Date today = new Date();
-        return (int) ((today.getTime() - birth.getTime()) / (1000 * 60 * 60 * 24 * 365.25));
+        Calendar today;
+        today = GregorianCalendar.getInstance();
+        return (int) milliseconds(today.getTimeInMillis() - birth.getTimeInMillis());
     }
-    
+
+    private long milliseconds(long millis) {
+        return millis / MILLISECONDS_PER_YEAR;
+    }
 }
